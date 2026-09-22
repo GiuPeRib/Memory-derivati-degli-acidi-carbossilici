@@ -127,7 +127,7 @@
 
     <script>
         // Dati della vetreria con i file locali ereditati dal primo file
-        const glasswareData = [
+        const chemicalFormulaData = [
             { id: 1, name: "Acido carbossilico", image: "Acido.webp" },
             { id: 2, name: "Anidride", image: "Anidride.png" },
             { id: 3, name: "Cloruro acilico", image: "Cloruro acilico.png" },
@@ -155,11 +155,11 @@
         }
 
         function loadSavedImages() {
-            const saved = localStorage.getItem('glassware_photos_map');
+            const saved = localStorage.getItem('chemicalFormula_photos_map');
             if (saved) {
                 try {
                     const customMap = JSON.parse(saved);
-                    glasswareData.forEach(item => {
+                    chemicalFormulaData.forEach(item => {
                         if (customMap[item.id] !== undefined) {
                             item.image = customMap[item.id];
                         }
@@ -185,11 +185,11 @@
             isLockBoard = false;
             
             document.getElementById('moves-count').innerText = '0';
-            document.getElementById('pairs-count').innerText = `0 / ${glasswareData.length}`;
+            document.getElementById('pairs-count').innerText = `0 / ${chemicalFormulaData.length}`;
             document.getElementById('timer').innerText = '00:00';
             clearInterval(timerInterval);
 
-            glasswareData.forEach(item => {
+            chemicalFormulaData.forEach(item => {
                 cards.push({
                     uniqueId: 'name-' + item.id,
                     id: item.id,
@@ -322,11 +322,11 @@
                 document.querySelector(`[data-index="${second.index}"]`).classList.add('matched-card');
 
                 matchedPairs++;
-                document.getElementById('pairs-count').innerText = `${matchedPairs} / ${glasswareData.length}`;
+                document.getElementById('pairs-count').innerText = `${matchedPairs} / ${chemicalFormulaData.length}`;
                 
                 resetTurn();
 
-                if (matchedPairs === glasswareData.length) {
+                if (matchedPairs === chemicalFormulaData.length) {
                     clearInterval(timerInterval);
                     setTimeout(showWinModal, 500);
                 }
@@ -359,7 +359,7 @@
             const container = document.getElementById('config-items-container');
             container.innerHTML = '';
 
-            glasswareData.forEach(item => {
+            chemicalFormulaData.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'flex flex-col sm:flex-row items-start sm:items-center gap-3 p-3 bg-slate-50 rounded-2xl border border-slate-200/80';
                 div.innerHTML = `
@@ -382,7 +382,7 @@
 
         function saveCustomImages() {
             const customMap = {};
-            glasswareData.forEach(item => {
+            chemicalFormulaData.forEach(item => {
                 const input = document.getElementById(`photo-input-${item.id}`);
                 if (input) {
                     item.image = input.value.trim();
@@ -390,7 +390,7 @@
                 }
             });
 
-            localStorage.setItem('glassware_photos_map', JSON.stringify(customMap));
+            localStorage.setItem('chemicalFormula_photos_map', JSON.stringify(customMap));
             closeConfigModal();
             initGame();
         }
